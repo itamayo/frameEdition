@@ -18,4 +18,4 @@ npm install
 npm start
 ```
 
-App url: http://localhost:3000/index.hmtl
+App url: http://localhost:3000/index.html
