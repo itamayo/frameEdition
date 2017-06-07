@@ -1,0 +1,68 @@
+<html>
+<head>
+  <script src="bower_components/sprintf/dist/sprintf.min.js"></script>
+</head>
+<body>
+  <div>
+    <br>
+    <img id="video"/>
+    <video id="player" src="out.webm" width="800" height="640" style="display:none;margin:0px;padding:0px;"></video>
+  </div>
+  <button onclick="changePlayer()"> Play </button>
+</body>
+</html>
+<script>
+var video = document.querySelector('video');
+
+var assetURL = 'video.mp4';
+var state ="frame";
+var fecthAB = function  (url, cb) {
+  var xhr = new XMLHttpRequest;
+  xhr.open('get', url);
+  xhr.responseType = 'arraybuffer';
+  xhr.onload = function () {
+    cb(xhr.response);
+  };
+  xhr.send();
+};
+var video = document.querySelector('#video');
+var frame = 0;
+fecthAB("/getFrame/?frame=0",function(data){
+  frame++;
+})
+setInterval(function(){
+  if (state=="frame"){
+    var xframe = sprintf("frame%04d",frame);
+    if (frame % 45 ==0)fecthAB("/getFrame/?frame="+frame,function(data){
+    })
+    fecthAB("/images/"+xframe+".jpg",function(data){
+      video.src = URL.createObjectURL(new Blob([data], {type: "image/jpeg"}));
+      frame++;
+    })
+  }
+},500);
+var player = document.querySelector('#player');
+var videoImage = document.querySelector('#video');
+function changePlayer (){
+  if (state=="frame"){
+    player.currentTime = 0.04*frame;
+    player.style.display ="block";
+    videoImage.style.display="none";
+    state="video";
+    player.play();
+  }
+  else {
+    player.pause();
+    frame = Math.floor(player.currentTime / 0.04);
+    fecthAB("/getFrame/?frame="+frame,function(data){
+      frame++;
+    });
+    setTimeout(function(){
+      player.style.display ="none";
+      videoImage.style.display="block";
+      state="frame";
+    },1000);
+  }
+
+}
+</script>

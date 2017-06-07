@@ -1,0 +1,28 @@
+{
+  "name": "frameeditor",
+  "version": "0.0.1",
+  "description": "Server for video frameEdition",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/itamayo/frameEdition.git"
+  },
+  "dependencies": {
+    "express": "latest",
+    "frame-extractor": "git://github.com/itamayo/frame-extractor.git",
+    "sprintf-js": "latest",
+    "async": "latest"
+  },
+  "keywords": [
+    "video",
+    "frame",
+    "edition",
+    "editor"
+  ],
+  "author": "itamayo <itamayo@vicomtech.org>",
+  "license": "Apache-2.0"
+}
